@@ -35,7 +35,6 @@ public class Departamento{
 	
 	@JsonView({Views.Departamento.class})
 	@OneToMany(mappedBy = "departamento", cascade=CascadeType.ALL)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Pesquisador> pesquisadores;
 	
 	@JsonView({Views.Departamento.class})

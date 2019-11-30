@@ -19,7 +19,7 @@ public class Pesquisador extends Funcionario{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pesquisador(Long id, String areaAtuacao,  String nome, String endereco, String sexo, LocalDate dataNascimento, Double salario,
+	public Pesquisador(Long id, String areaAtuacao,  String nome, Endereco endereco, String sexo, LocalDate dataNascimento, Double salario,
 			Departamento departamento) {
 		super(id, nome, endereco, sexo, dataNascimento, salario, departamento);
 		this.areaAtuacao = areaAtuacao;

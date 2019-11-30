@@ -2,6 +2,7 @@ package com.allissonjardel.departamentoBackend.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -26,8 +31,10 @@ public abstract class Funcionario {
 	private String nome;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
-	@Column(nullable=false)
-	private String endereco;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Endereco endereco;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
 	@Column(nullable=false)
@@ -50,7 +57,7 @@ public abstract class Funcionario {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Funcionario(Long id, String nome, String endereco, String sexo, LocalDate dataNascimento, Double salario,
+	public Funcionario(Long id, String nome, Endereco endereco, String sexo, LocalDate dataNascimento, Double salario,
 			Departamento departamento) {
 		super();
 		this.id = id;
@@ -80,11 +87,11 @@ public abstract class Funcionario {
 		this.nome = nome;
 	}
 
-	public String getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(String endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 

@@ -5,4 +5,5 @@ public class Views {
 	public interface Pesquisador{};
 	public interface Secretario{};
 	public interface FuncionarioLimpeza{};
+	public interface Endereco{};
 }
