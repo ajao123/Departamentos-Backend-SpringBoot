@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.allissonjardel.departamentoBackend.model.enums.Sexo;
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -38,7 +39,7 @@ public abstract class Funcionario {
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
 	@Column(nullable=false)
-	private String sexo;
+	private Integer sexo;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
 	@Column(nullable=false)
@@ -57,7 +58,7 @@ public abstract class Funcionario {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Funcionario(Long id, String nome, Endereco endereco, String sexo, LocalDate dataNascimento, Double salario,
+	public Funcionario(Long id, String nome, Endereco endereco, Integer sexo, LocalDate dataNascimento, Double salario,
 			Departamento departamento) {
 		super();
 		this.id = id;
@@ -95,12 +96,13 @@ public abstract class Funcionario {
 		this.endereco = endereco;
 	}
 
-	public String getSexo() {
-		return sexo;
+	
+	public Sexo getSexo() {
+		return Sexo.valueOf(sexo);
 	}
 
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo.getCode();
 	}
 
 	public LocalDate getDataNascimento() {

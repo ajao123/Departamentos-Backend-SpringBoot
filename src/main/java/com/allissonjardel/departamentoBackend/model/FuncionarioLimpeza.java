@@ -23,7 +23,7 @@ public class FuncionarioLimpeza extends Funcionario{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public FuncionarioLimpeza(Long id, String cargo, String jornadaTrabalho,  String nome, Endereco endereco, String sexo, LocalDate dataNascimento, Double salario,
+	public FuncionarioLimpeza(Long id, String cargo, String jornadaTrabalho,  String nome, Endereco endereco, Integer sexo, LocalDate dataNascimento, Double salario,
 			Departamento departamento) {
 		super(id, nome, endereco, sexo, dataNascimento, salario, departamento);
 		this.cargo = cargo;

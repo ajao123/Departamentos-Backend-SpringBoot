@@ -19,7 +19,7 @@ public class Secretario  extends Funcionario{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Secretario(Long id, String grauEscolaridade,  String nome, Endereco endereco, String sexo, LocalDate dataNascimento, Double salario,
+	public Secretario(Long id, String grauEscolaridade,  String nome, Endereco endereco, Integer sexo, LocalDate dataNascimento, Double salario,
 			Departamento departamento) {
 		super(id, nome, endereco, sexo, dataNascimento, salario, departamento);
 		this.grauEscolaridade = grauEscolaridade;
