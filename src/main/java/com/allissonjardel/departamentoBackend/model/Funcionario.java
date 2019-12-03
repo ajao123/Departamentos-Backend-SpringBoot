@@ -1,17 +1,25 @@
 package com.allissonjardel.departamentoBackend.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -19,48 +27,60 @@ import com.allissonjardel.departamentoBackend.model.enums.Sexo;
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
-@MappedSuperclass
-public abstract class Funcionario {
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Funcionario implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
-	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView({Views.Departamento.class, Views.Trabalho.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Trabalho.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
 	@Column(nullable=false)
 	private String nome;
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
-	
+	@JsonView({Views.Departamento.class, Views.Trabalho.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
 	@OneToOne(cascade=CascadeType.ALL)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Endereco endereco;
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
 	@Column(nullable=false)
 	private Integer sexo;
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
 	@Column(nullable=false)
 	private LocalDate dataNascimento;
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
 	@Column(nullable=false)
 	private Double salario;
 	
-	@JsonView({Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Pesquisador.class, Views.Secretario.class, Views.Trabalho.class, Views.FuncionarioLimpeza.class, Views.Projeto.class})
 	@ManyToOne
 	@JoinColumn(name="departamento_id", nullable=false)
 	private Departamento departamento;
+
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@OneToMany(mappedBy = "funcionario", fetch = FetchType.EAGER, orphanRemoval=true)
+	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+	private List<Dependente> dependentes;
 	
 	public Funcionario() {
+		dependentes = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Funcionario(Long id, String nome, Endereco endereco, Integer sexo, LocalDate dataNascimento, Double salario,
 			Departamento departamento) {
 		super();
+		dependentes = new ArrayList<>();
 		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;
@@ -128,6 +148,14 @@ public abstract class Funcionario {
 
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
+	}
+
+	public List<Dependente> getDependentes() {
+		return dependentes;
+	}
+	
+	public void setDependentes(List<Dependente> dependentes) {
+		this.dependentes = dependentes;
 	}
 
 	@Override

@@ -20,21 +20,22 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 public class Departamento{
 
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Projeto.class})
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Projeto.class})
 	@Column(unique=true, nullable=false)
 	private String name;
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Projeto.class})
 	@Column(nullable=false)
 	private String descricao;
 	
 	@JsonView({Views.Departamento.class})
 	@OneToMany(mappedBy = "departamento", cascade=CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Pesquisador> pesquisadores;
 	
 	@JsonView({Views.Departamento.class})
@@ -47,13 +48,20 @@ public class Departamento{
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<FuncionarioLimpeza> funcionariosLimpeza;
 	
+	@JsonView({Views.Departamento.class})
+	@OneToMany(mappedBy="departamento", cascade=CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private List<Projeto> projetos;
+	
 	public Departamento() {
+		projetos = new ArrayList<>();
 		pesquisadores = new ArrayList<>();
 		secretarios = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Departamento(Long id, String name, String descricao) {
+		projetos = new ArrayList<>();
 		pesquisadores = new ArrayList<>();
 		secretarios = new ArrayList<>();
 		this.id = id;

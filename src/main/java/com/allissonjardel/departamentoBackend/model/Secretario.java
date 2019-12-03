@@ -2,17 +2,19 @@ package com.allissonjardel.departamentoBackend.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
+@Table
 public class Secretario  extends Funcionario{
 
-	@JsonView({Views.Departamento.class, Views.Secretario.class})
-	@Column(nullable=false)
+	private static final long serialVersionUID = 1L;
+	
+	@JsonView({Views.Departamento.class, Views.Secretario.class, Views.Dependente.class})
 	private String grauEscolaridade;
 	
 	public Secretario() {

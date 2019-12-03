@@ -2,8 +2,6 @@ package com.allissonjardel.departamentoBackend.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.allissonjardel.departamentoBackend.model.Departamento;
 
 

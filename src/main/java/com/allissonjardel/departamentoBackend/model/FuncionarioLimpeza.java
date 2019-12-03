@@ -2,21 +2,22 @@ package com.allissonjardel.departamentoBackend.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
+@Table
 public class FuncionarioLimpeza extends Funcionario{
 	
-	@JsonView({Views.Departamento.class, Views.FuncionarioLimpeza.class})
-	@Column(nullable=false)
+	private static final long serialVersionUID = 1L;
+	
+	@JsonView({Views.Departamento.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
 	private String cargo;
 	
-	@JsonView({Views.Departamento.class, Views.FuncionarioLimpeza.class})
-	@Column(nullable=false)
+	@JsonView({Views.Departamento.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
 	private String jornadaTrabalho;
 	
 	public FuncionarioLimpeza() {
