@@ -2,11 +2,11 @@ package com.allissonjardel.departamentoBackend.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,10 +25,19 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.allissonjardel.departamentoBackend.model.enums.Sexo;
 import com.allissonjardel.departamentoBackend.util.Views;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="dtype")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "dtype")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Pesquisador.class, name = "pesquisador"),
+    @JsonSubTypes.Type(value = Secretario.class, name = "secretario"),
+    @JsonSubTypes.Type(value = FuncionarioLimpeza.class, name = "funcionarioLimpeza")
+})
 public abstract class Funcionario implements Serializable{
 	
 	/**
@@ -38,7 +47,7 @@ public abstract class Funcionario implements Serializable{
 
 	@JsonView({Views.Departamento.class, Views.Trabalho.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@JsonView({Views.Departamento.class, Views.Trabalho.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
@@ -73,14 +82,12 @@ public abstract class Funcionario implements Serializable{
 	private List<Dependente> dependentes;
 	
 	public Funcionario() {
-		dependentes = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Funcionario(Long id, String nome, Endereco endereco, Integer sexo, LocalDate dataNascimento, Double salario,
 			Departamento departamento) {
 		super();
-		dependentes = new ArrayList<>();
 		this.id = id;
 		this.nome = nome;
 		this.endereco = endereco;

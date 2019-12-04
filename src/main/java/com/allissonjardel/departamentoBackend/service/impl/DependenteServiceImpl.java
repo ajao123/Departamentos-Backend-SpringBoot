@@ -47,21 +47,14 @@ public class DependenteServiceImpl implements DependenteService{
 	}
 
 	@Override
-	public void insert(Long id, Dependente entity) {
-		if(pRepository.existsById(id)) {
-			entity.setFuncionario(pRepository.findById(id).get());
-		}else if(sRepository.existsById(id)) {
-			entity.setFuncionario(sRepository.findById(id).get());
-		}else if(fRepository.existsById(id)) {
-			entity.setFuncionario(fRepository.findById(id).get());
-		}
+	public void insert(Dependente entity) {
 		repository.save(entity);
 	}
 
 	@Override
 	public void update(Long id, Dependente entity) {
 		Dependente entity2 = repository.findById(id).get();
-		BeanUtils.copyProperties(entity, entity2, "id");
+		BeanUtils.copyProperties(entity, entity2, "id","funcionario");
 		repository.save(entity2);
 		
 	}

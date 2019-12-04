@@ -48,7 +48,7 @@ public class Dependente{
 	@JoinColumn(name="funcionario_id")
 	private Funcionario funcionario;
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
 	@OneToOne(cascade=CascadeType.ALL)
 	@OnDelete(action=OnDeleteAction.CASCADE) 
 	private Endereco endereco;
@@ -57,13 +57,14 @@ public class Dependente{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Dependente(Long id, String nome, Integer sexo, LocalDate data, String parentesco, Endereco endereco) {
+	public Dependente(Long id, String nome, Integer sexo, LocalDate data, String parentesco, Endereco endereco, Funcionario funcionario) {
 		this.id = id;
 		this.nome = nome;
 		this.sexo = sexo;
 		this.data = data;
 		this.parentesco = parentesco;
 		this.endereco = endereco;
+		this.funcionario = funcionario;
 	}
 
 	public Long getId() {

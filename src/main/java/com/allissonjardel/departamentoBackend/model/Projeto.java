@@ -37,7 +37,7 @@ public class Projeto {
 	@JoinColumn(name="departamento_id", nullable=false)
 	private Departamento departamento;
 	
-	@JsonView({Views.Projeto.class})
+	@JsonView({Views.Projeto.class, Views.Departamento.class})
 	@OneToMany(mappedBy = "projeto", cascade=CascadeType.ALL)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private List<Trabalho> trabalhos;

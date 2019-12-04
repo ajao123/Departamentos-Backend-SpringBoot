@@ -2,14 +2,13 @@ package com.allissonjardel.departamentoBackend.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
-@Table
+@DiscriminatorValue(value = "secretario")
 public class Secretario  extends Funcionario{
 
 	private static final long serialVersionUID = 1L;

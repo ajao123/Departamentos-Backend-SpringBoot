@@ -1,6 +1,5 @@
 package com.allissonjardel.departamentoBackend.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,17 +35,7 @@ public class Departamento{
 	@JsonView({Views.Departamento.class})
 	@OneToMany(mappedBy = "departamento", cascade=CascadeType.ALL)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<Pesquisador> pesquisadores;
-	
-	@JsonView({Views.Departamento.class})
-	@OneToMany(mappedBy = "departamento", cascade=CascadeType.ALL)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<Secretario> secretarios;
-	
-	@JsonView({Views.Departamento.class})
-	@OneToMany(mappedBy = "departamento", cascade=CascadeType.ALL)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private List<FuncionarioLimpeza> funcionariosLimpeza;
+	private List<Funcionario> funcionarios;
 	
 	@JsonView({Views.Departamento.class})
 	@OneToMany(mappedBy="departamento", cascade=CascadeType.ALL)
@@ -54,16 +43,10 @@ public class Departamento{
 	private List<Projeto> projetos;
 	
 	public Departamento() {
-		projetos = new ArrayList<>();
-		pesquisadores = new ArrayList<>();
-		secretarios = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Departamento(Long id, String name, String descricao) {
-		projetos = new ArrayList<>();
-		pesquisadores = new ArrayList<>();
-		secretarios = new ArrayList<>();
 		this.id = id;
 		this.name = name;
 		this.descricao = descricao;
@@ -91,14 +74,6 @@ public class Departamento{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public List<Pesquisador> getPesquisadores() {
-		return pesquisadores;
-	}
-
-	public void setPesquisadores(List<Pesquisador> pesquisadores) {
-		this.pesquisadores = pesquisadores;
 	}
 
 	@Override

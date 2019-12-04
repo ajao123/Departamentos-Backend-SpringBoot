@@ -1,13 +1,12 @@
 package com.allissonjardel.departamentoBackend.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,7 +15,7 @@ import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
-@Table
+@DiscriminatorValue(value = "pesquisador")
 public class Pesquisador extends Funcionario{
 	
 
@@ -32,13 +31,11 @@ public class Pesquisador extends Funcionario{
 	
 	public Pesquisador() {
 		// TODO Auto-generated constructor stub
-		trabalhos = new ArrayList<>();
 	}
 
 	public Pesquisador(Long id, String areaAtuacao,  String nome, Endereco endereco, Integer sexo, LocalDate dataNascimento, Double salario,
 			Departamento departamento) {
 		super(id, nome, endereco, sexo, dataNascimento, salario, departamento);
-		trabalhos = new ArrayList<>();
 		this.areaAtuacao = areaAtuacao;
 	}
 

@@ -43,9 +43,10 @@ public class DependenteController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PostMapping("/{id}")
-	public ResponseEntity<Void> insert(@PathVariable Long id, @RequestBody Dependente entity){
-		service.insert(id, entity);
+	@PostMapping
+	public ResponseEntity<Void> insert(@RequestBody Dependente entity){
+		System.out.println("Funcionario id: " + entity.getFuncionario().getId());
+		service.insert(entity);
 		return ResponseEntity.ok().build();
 	}
 	

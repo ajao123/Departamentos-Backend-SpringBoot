@@ -18,7 +18,7 @@ public class Trabalho {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonView({Views.Trabalho.class, Views.Pesquisador.class, Views.Projeto.class})
+	@JsonView({Views.Trabalho.class, Views.Pesquisador.class, Views.Projeto.class, Views.Departamento.class})
 	private Integer horasSemanais;
 	
 	@JsonView({Views.Trabalho.class, Views.Pesquisador.class})
@@ -26,7 +26,7 @@ public class Trabalho {
 	@JoinColumn(name="projeto_id", nullable=false)
 	private Projeto projeto;
 	
-	@JsonView({Views.Trabalho.class, Views.Projeto.class})
+	@JsonView({Views.Trabalho.class, Views.Projeto.class, Views.Departamento.class})
 	@ManyToOne
 	@JoinColumn(name="pesquisador_id", nullable=false)
 	private Pesquisador pesquisador;

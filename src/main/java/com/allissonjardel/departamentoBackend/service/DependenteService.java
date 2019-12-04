@@ -10,7 +10,7 @@ public interface DependenteService {
 	Dependente findById(Long id);
 	List<Dependente> getAll();
 	void deleteById(Long id);
-	void insert(Long id, Dependente entity);
+	void insert(Dependente entity);
 	void update(Long id, Dependente entity);
 	
 }
