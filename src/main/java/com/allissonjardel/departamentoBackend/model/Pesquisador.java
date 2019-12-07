@@ -1,6 +1,7 @@
 package com.allissonjardel.departamentoBackend.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,6 +31,7 @@ public class Pesquisador extends Funcionario{
 	private List<Trabalho> trabalhos;
 	
 	public Pesquisador() {
+		trabalhos = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 

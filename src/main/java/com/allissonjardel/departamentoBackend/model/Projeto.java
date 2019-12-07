@@ -48,7 +48,6 @@ public class Projeto {
 	}
 
 	public Projeto(Long id, Departamento departamento, String nome, String periodoTempo) {
-		trabalhos = new ArrayList<>();
 		this.id = id;
 		this.departamento = departamento;
 		this.nome = nome;

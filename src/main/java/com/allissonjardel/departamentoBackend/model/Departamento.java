@@ -1,5 +1,6 @@
 package com.allissonjardel.departamentoBackend.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,6 +33,7 @@ public class Departamento{
 	@Column(nullable=false)
 	private String descricao;
 	
+	
 	@JsonView({Views.Departamento.class})
 	@OneToMany(mappedBy = "departamento", cascade=CascadeType.ALL)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -44,6 +46,8 @@ public class Departamento{
 	
 	public Departamento() {
 		// TODO Auto-generated constructor stub
+		funcionarios = new ArrayList<>();
+		projetos = new ArrayList<>();
 	}
 
 	public Departamento(Long id, String name, String descricao) {
@@ -74,6 +78,22 @@ public class Departamento{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
+	public List<Projeto> getProjetos() {
+		return projetos;
+	}
+
+	public void setProjetos(List<Projeto> projetos) {
+		this.projetos = projetos;
 	}
 
 	@Override

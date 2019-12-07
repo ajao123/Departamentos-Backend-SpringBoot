@@ -1,13 +1,13 @@
 package com.allissonjardel.departamentoBackend.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.allissonjardel.departamentoBackend.model.Dependente;
-import com.allissonjardel.departamentoBackend.model.Funcionario;
 import com.allissonjardel.departamentoBackend.repository.DependenteRepository;
 import com.allissonjardel.departamentoBackend.repository.FuncionarioLimpezaRepository;
 import com.allissonjardel.departamentoBackend.repository.PesquisadorRepository;
@@ -47,8 +47,8 @@ public class DependenteServiceImpl implements DependenteService{
 	}
 
 	@Override
-	public void insert(Dependente entity) {
-		repository.save(entity);
+	public Dependente insert(Dependente entity) {
+		return repository.save(entity);
 	}
 
 	@Override
@@ -59,4 +59,9 @@ public class DependenteServiceImpl implements DependenteService{
 		
 	}
 
+	@Override
+	public Optional<Dependente> getOptional(Long id) {
+		return repository.findById(id);
+	}
+	
 }

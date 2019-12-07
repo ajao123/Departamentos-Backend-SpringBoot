@@ -1,6 +1,7 @@
 package com.allissonjardel.departamentoBackend.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class TrabalhoServiceImpl implements TrabalhoService{
 	}
 
 	@Override
-	public void insert(Trabalho entity) {
-		repository.save(entity);
+	public Trabalho insert(Trabalho entity) {
+		return repository.save(entity);
 	}
 
 	@Override
@@ -46,4 +47,9 @@ public class TrabalhoServiceImpl implements TrabalhoService{
 		
 	}
 
+	@Override
+	public Optional<Trabalho> getOptional(Long id) {
+		return repository.findById(id);
+	}
+	
 }

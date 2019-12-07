@@ -1,6 +1,7 @@
 package com.allissonjardel.departamentoBackend.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class DepartamentoServiceImpl implements DepartamentoService{
 	}
 
 	@Override
-	public void insert(Departamento entity) {
-		repository.save(entity);
+	public Departamento insert(Departamento entity) {
+		return repository.save(entity);
 	}
 
 	@Override
@@ -45,5 +46,12 @@ public class DepartamentoServiceImpl implements DepartamentoService{
 		repository.save(entity2);
 		
 	}
+
+	@Override
+	public Optional<Departamento> getOptional(Long id) {
+		return repository.findById(id);
+	}
+	
+	
 
 }

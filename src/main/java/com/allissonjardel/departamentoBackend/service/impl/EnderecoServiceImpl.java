@@ -1,6 +1,7 @@
 package com.allissonjardel.departamentoBackend.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class EnderecoServiceImpl implements EnderecoService{
 	}
 
 	@Override
-	public void insert(Endereco entity) {
-		repository.save(entity);
+	public Endereco insert(Endereco entity) {
+		return repository.save(entity);
 	}
 
 	@Override
@@ -46,4 +47,9 @@ public class EnderecoServiceImpl implements EnderecoService{
 		
 	}
 
+	@Override
+	public Optional<Endereco> getOptional(Long id) {
+		return repository.findById(id);
+	}
+	
 }

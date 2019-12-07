@@ -1,8 +1,14 @@
 package com.allissonjardel.departamentoBackend.controller;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.allissonjardel.departamentoBackend.model.Departamento;
+import com.allissonjardel.departamentoBackend.model.dto.DepartamentoDTO;
 import com.allissonjardel.departamentoBackend.service.DepartamentoService;
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -24,17 +33,21 @@ public class DepartamentoController {
 
 	@Autowired
 	DepartamentoService service;
-	
+
 	@GetMapping
 	@JsonView(Views.Departamento.class)
-	public ResponseEntity<List<Departamento>> getAll(){
-		return ResponseEntity.ok().body(service.getAll());
+	public ResponseEntity<List<DepartamentoDTO>> getAll(){
+		List<Departamento> list = service.getAll();
+		List<DepartamentoDTO> listDTO = list.stream().map(x -> new DepartamentoDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
 	}
-	
+		
 	@GetMapping("/{id}")
 	@JsonView(Views.Departamento.class)
-	public ResponseEntity<Departamento> findById(@PathVariable Long id){
-		return ResponseEntity.ok().body(service.findById(id));
+	public ResponseEntity<?> findById(@PathVariable Long id){
+		Optional<Departamento> entity = service.getOptional(id);
+		return entity.isPresent() ? ResponseEntity.ok().body(new DepartamentoDTO(entity.get())) : 
+									ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{id}")
@@ -44,9 +57,16 @@ public class DepartamentoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Departamento entity){
-		service.insert(entity);
-		return ResponseEntity.ok().build();
+	@JsonView(Views.Departamento.class)
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<DepartamentoDTO> insert(@RequestBody Departamento entity,  HttpServletResponse response){
+		Departamento entitySave = service.insert(entity);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+				.buildAndExpand(entitySave.getId()).toUri();
+		response.setHeader("Location", uri.toASCIIString());
+			
+		return ResponseEntity.created(uri).body(new DepartamentoDTO(entitySave));
 	}
 	
 	@PutMapping("/{id}")

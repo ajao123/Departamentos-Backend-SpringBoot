@@ -1,6 +1,7 @@
 package com.allissonjardel.departamentoBackend.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class FuncionarioLimpezaServiceImpl implements FuncionarioLimpezaService{
 	}
 
 	@Override
-	public void insert(FuncionarioLimpeza entity) {
-		repository.save(entity);
+	public FuncionarioLimpeza insert(FuncionarioLimpeza entity) {
+		return repository.save(entity);
 	}
 
 	@Override
@@ -46,4 +47,9 @@ public class FuncionarioLimpezaServiceImpl implements FuncionarioLimpezaService{
 		
 	}
 
+	@Override
+	public Optional<FuncionarioLimpeza> getOptional(Long id) {
+		return repository.findById(id);
+	}
+	
 }

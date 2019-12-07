@@ -2,6 +2,7 @@ package com.allissonjardel.departamentoBackend.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -82,6 +83,7 @@ public abstract class Funcionario implements Serializable{
 	private List<Dependente> dependentes;
 	
 	public Funcionario() {
+		dependentes = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -125,7 +127,7 @@ public abstract class Funcionario implements Serializable{
 
 	
 	public Sexo getSexo() {
-		return Sexo.valueOf(sexo);
+		return (sexo == null) ? null : Sexo.valueOf(sexo);
 	}
 
 	public void setSexo(Sexo sexo) {
