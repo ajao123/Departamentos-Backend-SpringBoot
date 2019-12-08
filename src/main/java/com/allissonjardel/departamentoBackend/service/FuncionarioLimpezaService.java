@@ -12,6 +12,6 @@ public interface FuncionarioLimpezaService {
 	List<FuncionarioLimpeza> getAll();
 	void deleteById(Long id);
 	FuncionarioLimpeza insert(FuncionarioLimpeza entity);
-	void update(Long id, FuncionarioLimpeza entity);
+	FuncionarioLimpeza update(Long id, FuncionarioLimpeza entity);
 	Optional<FuncionarioLimpeza> getOptional(Long id);
 }

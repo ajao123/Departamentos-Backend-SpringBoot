@@ -12,6 +12,6 @@ public interface TrabalhoService {
 	List<Trabalho> getAll();
 	void deleteById(Long id);
 	Trabalho insert(Trabalho entity);
-	void update(Long id, Trabalho entity);
+	Trabalho update(Long id, Trabalho entity);
 	Optional<Trabalho> getOptional(Long id);
 }

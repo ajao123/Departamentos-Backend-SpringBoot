@@ -6,9 +6,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -58,8 +58,7 @@ public class DepartamentoController {
 	
 	@PostMapping
 	@JsonView(Views.Departamento.class)
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<DepartamentoDTO> insert(@RequestBody Departamento entity,  HttpServletResponse response){
+	public ResponseEntity<DepartamentoDTO> insert(@Valid @RequestBody Departamento entity,  HttpServletResponse response){
 		Departamento entitySave = service.insert(entity);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
@@ -70,9 +69,15 @@ public class DepartamentoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Departamento entity){
-		service.update(id, entity);
-		return ResponseEntity.ok().build();
+	@JsonView(Views.Departamento.class)
+	public ResponseEntity<Departamento> update(@PathVariable Long id, @Valid @RequestBody Departamento entity){
+		
+		Optional<Departamento> optional = service.getOptional(id);
+		
+		if(!optional.isPresent()) 
+			throw new EmptyResultDataAccessException(1);
+		
+		return ResponseEntity.ok().body(service.update(id, entity));
 	}
 	
 }

@@ -40,10 +40,10 @@ public class SecretarioServiceImpl implements SecretarioService{
 	}
 
 	@Override
-	public void update(Long id, Secretario entity) {
+	public Secretario update(Long id, Secretario entity) {
 		Secretario entity2 = repository.findById(id).get();
 		BeanUtils.copyProperties(entity, entity2, "id");
-		repository.save(entity2);
+		return repository.save(entity2);
 		
 	}
 

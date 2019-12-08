@@ -12,7 +12,7 @@ public interface DepartamentoService {
 	List<Departamento> getAll();
 	void deleteById(Long id);
 	Departamento insert(Departamento entity);
-	void update(Long id, Departamento entity);
+	Departamento update(Long id, Departamento entity);
 	Optional<Departamento> getOptional(Long id);
 	
 }

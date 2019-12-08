@@ -1,10 +1,10 @@
 package com.allissonjardel.departamentoBackend.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -12,37 +12,37 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 public class Endereco {
 	
-	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class})
+	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id
 	private Long id;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private String rua;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private Integer numero;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private String complemento;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private String bairro;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private String cidade;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private String estado;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private String pais;
 	
 	public Endereco() {

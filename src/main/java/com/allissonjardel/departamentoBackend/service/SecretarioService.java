@@ -12,6 +12,6 @@ public interface SecretarioService {
 	List<Secretario> getAll();
 	void deleteById(Long id);
 	Secretario insert(Secretario entity);
-	void update(Long id, Secretario entity);
+	Secretario update(Long id, Secretario entity);
 	Optional<Secretario> getOptional(Long id);
 }

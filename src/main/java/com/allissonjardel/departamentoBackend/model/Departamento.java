@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -26,11 +28,13 @@ public class Departamento{
 	private Long id;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Projeto.class})
-	@Column(unique=true, nullable=false)
+	@Column(unique=true)
+	@NotNull
+	@Size(min=3, max=22)
 	private String name;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Projeto.class})
-	@Column(nullable=false)
+	@NotNull
 	private String descricao;
 	
 	

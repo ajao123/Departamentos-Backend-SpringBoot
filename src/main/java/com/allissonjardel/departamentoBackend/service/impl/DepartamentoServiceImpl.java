@@ -40,10 +40,10 @@ public class DepartamentoServiceImpl implements DepartamentoService{
 	}
 
 	@Override
-	public void update(Long id, Departamento entity) {
+	public Departamento update(Long id, Departamento entity) {
 		Departamento entity2 = repository.findById(id).get();
 		BeanUtils.copyProperties(entity, entity2, "id");
-		repository.save(entity2);
+		return repository.save(entity2);
 		
 	}
 

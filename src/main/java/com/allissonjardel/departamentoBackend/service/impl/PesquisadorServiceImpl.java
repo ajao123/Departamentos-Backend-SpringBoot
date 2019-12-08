@@ -40,10 +40,10 @@ public class PesquisadorServiceImpl implements PesquisadorService{
 	}
 
 	@Override
-	public void update(Long id, Pesquisador entity) {
+	public Pesquisador update(Long id, Pesquisador entity) {
 		Pesquisador entity2 = repository.findById(id).get();
 		BeanUtils.copyProperties(entity, entity2, "id");
-		repository.save(entity2);
+		return repository.save(entity2);
 		
 	}
 

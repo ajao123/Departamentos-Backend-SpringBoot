@@ -40,10 +40,10 @@ public class FuncionarioLimpezaServiceImpl implements FuncionarioLimpezaService{
 	}
 
 	@Override
-	public void update(Long id, FuncionarioLimpeza entity) {
+	public FuncionarioLimpeza update(Long id, FuncionarioLimpeza entity) {
 		FuncionarioLimpeza entity2 = repository.findById(id).get();
 		BeanUtils.copyProperties(entity, entity2, "id");
-		repository.save(entity2);
+		return repository.save(entity2);
 		
 	}
 

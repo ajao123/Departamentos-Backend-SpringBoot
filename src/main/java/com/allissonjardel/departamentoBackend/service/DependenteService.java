@@ -12,6 +12,6 @@ public interface DependenteService {
 	List<Dependente> getAll();
 	void deleteById(Long id);
 	Dependente insert(Dependente entity);
-	void update(Long id, Dependente entity);
+	Dependente update(Long id, Dependente entity);
 	Optional<Dependente> getOptional(Long id);
 }

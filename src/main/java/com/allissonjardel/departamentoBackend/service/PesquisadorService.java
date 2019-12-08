@@ -12,6 +12,6 @@ public interface PesquisadorService {
 	List<Pesquisador> getAll();
 	void deleteById(Long id);
 	Pesquisador insert(Pesquisador entity);
-	void update(Long id, Pesquisador entity);
+	Pesquisador update(Long id, Pesquisador entity);
 	Optional<Pesquisador> getOptional(Long id);
 }

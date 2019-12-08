@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -27,14 +28,17 @@ public class Projeto {
 	private Long id;
 	
 	@JsonView({Views.Departamento.class, Views.Projeto.class, Views.Trabalho.class, Views.Pesquisador.class})
+	@NotNull
 	private String nome;
 	
 	@JsonView({Views.Departamento.class, Views.Projeto.class, Views.Trabalho.class, Views.Pesquisador.class})
+	@NotNull
 	private String periodoTempo;
 	
 	@JsonView({Views.Projeto.class, Views.Trabalho.class, Views.Pesquisador.class})
 	@ManyToOne
-	@JoinColumn(name="departamento_id", nullable=false)
+	@JoinColumn(name="departamento_id")
+	@NotNull
 	private Departamento departamento;
 	
 	@JsonView({Views.Projeto.class, Views.Departamento.class})

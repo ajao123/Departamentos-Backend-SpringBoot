@@ -12,6 +12,6 @@ public interface EnderecoService {
 	List<Endereco> getAll();
 	void deleteById(Long id);
 	Endereco insert(Endereco entity);
-	void update(Long id, Endereco entity);
+	Endereco update(Long id, Endereco entity);
 	Optional<Endereco> getOptional(Long id);
 }

@@ -3,7 +3,6 @@ package com.allissonjardel.departamentoBackend.model;
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -28,19 +28,19 @@ public class Dependente{
 	private Long id;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private String nome;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private Integer sexo;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull
 	private LocalDate data;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
-	@Column(nullable=false)
+	@NotNull	
 	private String parentesco;
 	
 	@JsonView({Views.Dependente.class})
@@ -51,6 +51,7 @@ public class Dependente{
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class})
 	@OneToOne(cascade=CascadeType.ALL)
 	@OnDelete(action=OnDeleteAction.CASCADE) 
+	@NotNull
 	private Endereco endereco;
 	
 	public Dependente() {

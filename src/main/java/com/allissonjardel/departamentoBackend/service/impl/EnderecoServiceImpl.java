@@ -40,10 +40,10 @@ public class EnderecoServiceImpl implements EnderecoService{
 	}
 
 	@Override
-	public void update(Long id, Endereco entity) {
+	public Endereco update(Long id, Endereco entity) {
 		Endereco entity2 = repository.findById(id).get();
 		BeanUtils.copyProperties(entity, entity2, "id");
-		repository.save(entity2);
+		return repository.save(entity2);
 		
 	}
 

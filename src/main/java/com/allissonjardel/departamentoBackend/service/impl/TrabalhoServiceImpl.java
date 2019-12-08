@@ -40,10 +40,10 @@ public class TrabalhoServiceImpl implements TrabalhoService{
 	}
 
 	@Override
-	public void update(Long id, Trabalho entity) {
+	public Trabalho update(Long id, Trabalho entity) {
 		Trabalho entity2 = repository.findById(id).get();
 		BeanUtils.copyProperties(entity, entity2, "id");
-		repository.save(entity2);
+		return repository.save(entity2);
 		
 	}
 

@@ -40,10 +40,10 @@ public class ProjetoServiceImpl implements ProjetoService{
 	}
 
 	@Override
-	public void update(Long id, Projeto entity) {
+	public Projeto update(Long id, Projeto entity) {
 		Projeto entity2 = repository.findById(id).get();
 		BeanUtils.copyProperties(entity, entity2, "id");
-		repository.save(entity2);	
+		return repository.save(entity2);	
 	}
 	
 	@Override

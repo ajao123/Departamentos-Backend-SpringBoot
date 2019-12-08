@@ -52,10 +52,10 @@ public class DependenteServiceImpl implements DependenteService{
 	}
 
 	@Override
-	public void update(Long id, Dependente entity) {
+	public Dependente update(Long id, Dependente entity) {
 		Dependente entity2 = repository.findById(id).get();
 		BeanUtils.copyProperties(entity, entity2, "id","funcionario");
-		repository.save(entity2);
+		return repository.save(entity2);
 		
 	}
 

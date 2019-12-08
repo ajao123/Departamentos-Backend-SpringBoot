@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.allissonjardel.departamentoBackend.util.Views;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -19,16 +20,19 @@ public class Trabalho {
 	private Long id;
 	
 	@JsonView({Views.Trabalho.class, Views.Pesquisador.class, Views.Projeto.class, Views.Departamento.class})
+	@NotNull
 	private Integer horasSemanais;
 	
 	@JsonView({Views.Trabalho.class, Views.Pesquisador.class})
 	@ManyToOne
-	@JoinColumn(name="projeto_id", nullable=false)
+	@JoinColumn(name="projeto_id")
+	@NotNull
 	private Projeto projeto;
 	
 	@JsonView({Views.Trabalho.class, Views.Projeto.class, Views.Departamento.class})
 	@ManyToOne
-	@JoinColumn(name="pesquisador_id", nullable=false)
+	@JoinColumn(name="pesquisador_id")
+	@NotNull
 	private Pesquisador pesquisador;
 	
 	public Trabalho() {

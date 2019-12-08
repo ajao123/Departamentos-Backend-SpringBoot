@@ -12,6 +12,6 @@ public interface ProjetoService {
 	List<Projeto> getAll();
 	void deleteById(Long id);
 	Projeto insert(Projeto entity);
-	void update(Long id, Projeto entity);
+	Projeto update(Long id, Projeto entity);
 	Optional<Projeto> getOptional(Long id);
 }
