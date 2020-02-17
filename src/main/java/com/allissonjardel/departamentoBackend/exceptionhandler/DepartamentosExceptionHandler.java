@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.allissonjardel.departamentoBackend.util.Erro;
+
 @ControllerAdvice
 public class DepartamentosExceptionHandler extends ResponseEntityExceptionHandler{
 
@@ -32,71 +34,55 @@ public class DepartamentosExceptionHandler extends ResponseEntityExceptionHandle
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			org.springframework.http.HttpHeaders headers, HttpStatus status, WebRequest request){
-			
+		
 		String messageUser = messageSource.getMessage("mensagem.invalida", null, LocaleContextHolder.getLocale());
 		String messageDeveloper = ex.toString();
 
-        List<Error> errors = Arrays.asList(new Error(messageUser, messageDeveloper));
+        List<Erro> errors = Arrays.asList(new Erro(messageUser, messageDeveloper));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 		
 	}
 	
 	//Atributos inválidos
+	//PS: O validator envia para cá
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
-		List<Error> errors = createListErrors(ex.getBindingResult());
+		List<Erro> errors = createListErrors(ex.getBindingResult());
 		return super.handleExceptionInternal(ex, errors, headers, status, request);
 	}
-
-	//Integridade dos dados nao foi mantida
+	
+	//Integridade dos dados nao foi mantida, ex: Adicionar 2 objetos com atributo UNIQUE iguais
 	@ExceptionHandler({DataIntegrityViolationException.class })
     public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-
         String userMessage = messageSource.getMessage("mensagem.integracao", null, LocaleContextHolder.getLocale());
         String developerMessage = ex.toString();
 
-        List<Error> errors = Arrays.asList(new Error(userMessage, developerMessage));
+        List<Erro> errors = Arrays.asList(new Erro(userMessage, developerMessage));
 
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 	
 	@ExceptionHandler({ EmptyResultDataAccessException.class })
 	public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
+		
 		String messageUser = messageSource.getMessage("recurso.nao-encontrado", null, LocaleContextHolder.getLocale());
 		String messageDeveloper = ex.toString();
-		List<Error> erros = Arrays.asList(new Error(messageUser, messageDeveloper));
+		List<Erro> erros = Arrays.asList(new Erro(messageUser, messageDeveloper));
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
-	private List<Error> createListErrors(BindingResult bindingResult){
-		List<Error> errors = new ArrayList<>();
+	private List<Erro> createListErrors(BindingResult bindingResult){
+		List<Erro> errors = new ArrayList<>();
 		
 		for(FieldError fieldError: bindingResult.getFieldErrors()) {
 			String messageUser = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
 			String messageDeveloper = fieldError.toString();
-			errors.add(new Error(messageUser, messageDeveloper));
+			errors.add(new Erro(messageUser, messageDeveloper));
 		}
 		
 		return errors;
 	}
 	
-	public static class Error{
-		private String messageUser;
-		private String messageDeveloper;
-		
-		public Error(String messageUser, String messageDeveloper) {
-			this.messageUser = messageUser;
-			this.messageDeveloper = messageDeveloper;
-		}
-
-		public String getMessageUser() {
-			return messageUser;
-		}
-
-		public String getMessageDeveloper() {
-			return messageDeveloper;
-		}		
-		
-	}
+	
 	
 }

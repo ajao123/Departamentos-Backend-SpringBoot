@@ -31,7 +31,7 @@ public class Departamento{
 	@Column(unique=true)
 	@NotNull
 	@Size(min=3, max=22)
-	private String name;
+	private String nome;
 	
 	@JsonView({Views.Departamento.class, Views.Pesquisador.class, Views.Trabalho.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Projeto.class})
 	@NotNull
@@ -54,9 +54,9 @@ public class Departamento{
 		projetos = new ArrayList<>();
 	}
 
-	public Departamento(Long id, String name, String descricao) {
+	public Departamento(Long id, String nome, String descricao) {
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
 		this.descricao = descricao;
 	}
 
@@ -68,12 +68,12 @@ public class Departamento{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getDescricao() {
@@ -124,5 +124,5 @@ public class Departamento{
 			return false;
 		return true;
 	}
-	
+
 }

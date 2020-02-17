@@ -1,18 +1,21 @@
 package com.allissonjardel.departamentoBackend.controller;
 
 import java.net.URI;
+//import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +28,7 @@ import com.allissonjardel.departamentoBackend.model.Departamento;
 import com.allissonjardel.departamentoBackend.model.dto.DepartamentoDTO;
 import com.allissonjardel.departamentoBackend.service.DepartamentoService;
 import com.allissonjardel.departamentoBackend.util.Views;
+import com.allissonjardel.departamentoBackend.validator.DepartamentoValidator;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
@@ -34,6 +38,12 @@ public class DepartamentoController {
 	@Autowired
 	DepartamentoService service;
 
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.addValidators(new DepartamentoValidator(service));
+	}
+	
 	@GetMapping
 	@JsonView(Views.Departamento.class)
 	public ResponseEntity<List<DepartamentoDTO>> getAll(){
@@ -53,31 +63,31 @@ public class DepartamentoController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id){
 		service.deleteById(id);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping
 	@JsonView(Views.Departamento.class)
-	public ResponseEntity<DepartamentoDTO> insert(@Valid @RequestBody Departamento entity,  HttpServletResponse response){
+	public ResponseEntity<DepartamentoDTO> insert(@Valid @RequestBody Departamento entity){
 		Departamento entitySave = service.insert(entity);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
 				.buildAndExpand(entitySave.getId()).toUri();
-		response.setHeader("Location", uri.toASCIIString());
-			
+		
+		//response.setHeader("Location", uri.toASCIIString());
 		return ResponseEntity.created(uri).body(new DepartamentoDTO(entitySave));
 	}
-	
-	@PutMapping("/{id}")
+
+	@PutMapping
 	@JsonView(Views.Departamento.class)
-	public ResponseEntity<Departamento> update(@PathVariable Long id, @Valid @RequestBody Departamento entity){
+	public ResponseEntity<DepartamentoDTO> update(@Valid @RequestBody Departamento entity){
 		
-		Optional<Departamento> optional = service.getOptional(id);
+		Optional<Departamento> optional = service.getOptional(entity.getId());
 		
 		if(!optional.isPresent()) 
 			throw new EmptyResultDataAccessException(1);
 		
-		return ResponseEntity.ok().body(service.update(id, entity));
+		return ResponseEntity.ok().body(new DepartamentoDTO(service.update(entity.getId(), entity)));
 	}
 	
 }

@@ -14,5 +14,6 @@ public interface DepartamentoService {
 	Departamento insert(Departamento entity);
 	Departamento update(Long id, Departamento entity);
 	Optional<Departamento> getOptional(Long id);
+	Integer existByName(String name);
 	
 }

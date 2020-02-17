@@ -51,6 +51,11 @@ public class DepartamentoServiceImpl implements DepartamentoService{
 	public Optional<Departamento> getOptional(Long id) {
 		return repository.findById(id);
 	}
+
+	@Override
+	public Integer existByName(String name) {
+		return repository.existByName(name);
+	}
 	
 	
 

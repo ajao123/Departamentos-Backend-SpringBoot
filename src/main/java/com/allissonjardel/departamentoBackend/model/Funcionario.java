@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
@@ -53,6 +54,8 @@ public abstract class Funcionario implements Serializable{
 	@NotNull
 	private String nome;
 	
+	//Testar sem OnDelete o relacionamento unidirecional
+	@Valid
 	@JsonView({Views.Departamento.class, Views.Trabalho.class, Views.Pesquisador.class, Views.Secretario.class, Views.FuncionarioLimpeza.class, Views.Dependente.class, Views.Projeto.class})
 	@OneToOne(cascade=CascadeType.ALL)
 	@OnDelete(action = OnDeleteAction.CASCADE)

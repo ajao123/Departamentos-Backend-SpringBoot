@@ -41,23 +41,27 @@ public class DepartamentoDTO{
 
 	public DepartamentoDTO(Departamento departamento) {
 		this.id = departamento.getId();
-		this.name = departamento.getName();
+		this.name = departamento.getNome();
 		this.descricao = departamento.getDescricao();
 		pesquisadores = new ArrayList<>();
 		secretarios = new ArrayList<>();
 		funcionariosLimpeza = new ArrayList<>();
 		projetos =  departamento.getProjetos();
 		
-		for(Funcionario funcionario : departamento.getFuncionarios()) {
-			if(funcionario instanceof Pesquisador) {
-				pesquisadores.add((Pesquisador) (funcionario));			
-			}else if(funcionario instanceof Secretario) {
-				secretarios.add((Secretario) (funcionario));		
-			}else if(funcionario instanceof FuncionarioLimpeza) {
-				funcionariosLimpeza.add((FuncionarioLimpeza) (funcionario));		
+		if(projetos == null)
+			projetos =  new ArrayList<>();
+		
+		if(departamento.getFuncionarios() != null) {
+			for(Funcionario funcionario : departamento.getFuncionarios()) {
+				if(funcionario instanceof Pesquisador) {
+					pesquisadores.add((Pesquisador) (funcionario));			
+				}else if(funcionario instanceof Secretario) {
+					secretarios.add((Secretario) (funcionario));		
+				}else if(funcionario instanceof FuncionarioLimpeza) {
+					funcionariosLimpeza.add((FuncionarioLimpeza) (funcionario));		
+				}
 			}
 		}
-		
 	}
 
 	public Long getId() {
@@ -114,6 +118,13 @@ public class DepartamentoDTO{
 
 	public void setProjetos(List<Projeto> projetos) {
 		this.projetos = projetos;
+	}
+
+	@Override
+	public String toString() {
+		return "DepartamentoDTO [id=" + id + ", name=" + name + ", descricao=" + descricao + ", pesquisadores="
+				+ pesquisadores + ", secretarios=" + secretarios + ", funcionariosLimpeza=" + funcionariosLimpeza
+				+ ", projetos=" + projetos + "]";
 	}
 	
 }
